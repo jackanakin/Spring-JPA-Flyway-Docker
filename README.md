@@ -1,20 +1,32 @@
-## Spring Boot + REST + CLI Arguments + JPA + Flyway + Docker
-Build project:
+## Spring Boot + REST + CLI Arguments + JPA + Flyway + Nginx + Docker
+Run all commands on root directory<br/>
+Just do step 2 to run, if you want to build run step 1
+<br/>
+### 1. Building:
+Build JAVA project:
 >./mvnw clean install
 
-1. Build Docker image or pull from repo:
->docker build --build-arg JAR_FILE=target/spring-boot-0.0.1-SNAPSHOT.jar -t jackanakin/springboot .
+Build APP Docker image (modify 'jackanakin' with your account':
+>docker build -f docker/app/Dockerfile --build-arg JAR_FILE=target/spring-boot-0.0.1-SNAPSHOT.jar -t jackanakin/spring_app .
+<br/>
+>docker push jackanakin/spring_app
 
->docker pull jackanakin/springboot
+Build Proxy Docker image (modify 'jackanakin' with your account':
+>docker build -f docker/proxy/Dockerfile --build-arg CONF_FILE=docker/proxy/default.conf -t jackanakin/spring_proxy .
+<br/>
+>docker push jackanakin/spring_proxy
 
-2. Create docker network (to allow both containers to communicate with each other):
+### 2. Deploying:
+Create docker network (to allow containers to communicate with each other):
 >docker network create spring_network
 
-3. Run database container:
->docker run -d -it --net spring_network --name springboot_db -e POSTGRES_USER=springboot -e POSTGRES_DB=springboot -e POSTGRES_PASSWORD=springbootpasswd -p 5432:5432 postgres
+Run database container:
+>docker run -d --net spring_network --name springdb -e POSTGRES_USER=springboot -e POSTGRES_DB=springboot -e POSTGRES_PASSWORD=springbootpasswd postgres
 
-Wait 15 seconds to ensure database is accepting connections
- 
->docker run -d -it --net spring_network -p 8080:8080 --name spring jackanakin/springboot --app_name="Docker Yeah" --datasource_url=springboot_db:5432/springboot
+Run application container 
+>docker run -d --net spring_network --name springapp jackanakin/spring_app --datasource_url=springdb:5432/springboot
 
-Go to http://localhost:8080/person to list all persons from database
+Run proxy container:
+>docker run --net spring_network -d -p 80:80 --name springproxy jackanakin/spring_proxy
+
+Go to http://localhost:80/person to list all persons from database
