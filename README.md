@@ -8,12 +8,12 @@ Build JAVA project:
 
 Build APP Docker image (modify 'jackanakin' with your account':
 >docker build -f docker/app/Dockerfile --build-arg JAR_FILE=target/spring-boot-0.0.1-SNAPSHOT.jar -t jackanakin/spring_app .
-<br/>
+
 >docker push jackanakin/spring_app
 
 Build Proxy Docker image (modify 'jackanakin' with your account':
 >docker build -f docker/proxy/Dockerfile --build-arg CONF_FILE=docker/proxy/default.conf -t jackanakin/spring_proxy .
-<br/>
+
 >docker push jackanakin/spring_proxy
 
 ### 2. Deploying:
