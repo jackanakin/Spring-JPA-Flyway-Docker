@@ -17,6 +17,7 @@
 		<springboot.version>2.5.12</springboot.version>
 		<postgresql.version>42.3.3</postgresql.version>
 		<flywaydb.version>8.5.13</flywaydb.version>
+		<guava.version>30.1.1-jre</guava.version>
 	</properties>
 	<dependencies>
 		<!-- springframework -->
@@ -34,6 +35,10 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<version>${springboot.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
 		<!-- postgresql -->
 		<dependency>
@@ -48,6 +53,12 @@
 			<artifactId>flyway-core</artifactId>
 			<version>${flywaydb.version}</version>
 		</dependency>
+
+		<dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
 
 	</dependencies>
 
