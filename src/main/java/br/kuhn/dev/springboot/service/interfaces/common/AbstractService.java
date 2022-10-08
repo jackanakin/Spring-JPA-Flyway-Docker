@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.service.interfaces;
+package br.kuhn.dev.springboot.service.interfaces.common;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 
 @Transactional
-public abstract class _AbstractService<T extends Serializable> implements _IOperations<T> {
+public abstract class AbstractService<T extends Serializable> implements IOperations<T> {
 
     // read - one
 
     @Override
     @Transactional(readOnly = true)
     public T findById(final long id) {
-        return getDao().findById(id).orElse(null);
+        return getRepository().findById(id).orElse(null);
     }
 
     // read - all
@@ -26,36 +26,36 @@ public abstract class _AbstractService<T extends Serializable> implements _IOper
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
-        return Lists.newArrayList(getDao().findAll());
+        return Lists.newArrayList(getRepository().findAll());
     }
 
     @Override
     public Page<T> findPaginated(final int page, final int size) {
-        return getDao().findAll(PageRequest.of(page, size));
+        return getRepository().findAll(PageRequest.of(page, size));
     }
 
     // write
 
     @Override
     public T create(final T entity) {
-        return getDao().save(entity);
+        return getRepository().save(entity);
     }
 
     @Override
     public T update(final T entity) {
-        return getDao().save(entity);
+        return getRepository().save(entity);
     }
 
     @Override
     public void delete(final T entity) {
-        getDao().delete(entity);
+        getRepository().delete(entity);
     }
 
     @Override
     public void deleteById(final long entityId) {
-        getDao().deleteById(entityId);
+        getRepository().deleteById(entityId);
     }
 
-    protected abstract PagingAndSortingRepository<T, Long> getDao();
+    protected abstract PagingAndSortingRepository<T, Long> getRepository();
 
 }

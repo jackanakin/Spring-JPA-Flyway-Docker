@@ -1,11 +1,11 @@
-package br.kuhn.dev.springboot.service.interfaces;
+package br.kuhn.dev.springboot.service.interfaces.common;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-public interface _IOperations<T extends Serializable> {
+public interface IOperations<T extends Serializable> {
 
     // read - one
 
