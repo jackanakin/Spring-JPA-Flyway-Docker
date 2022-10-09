@@ -20,6 +20,7 @@
 		<guava.version>30.1.1-jre</guava.version>
 		<lombok.version>1.18.24</lombok.version>
 		<jjwt.version>0.11.5</jjwt.version>
+		<aspectj.version>1.9.9.1</aspectj.version>
 	</properties>
 	<dependencies>
 		<!-- springframework -->
@@ -94,6 +95,14 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 
 	</dependencies>
 
