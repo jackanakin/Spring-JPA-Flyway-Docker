@@ -7,13 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import br.kuhn.dev.springboot.entity.User;
 import br.kuhn.dev.springboot.properties.JwtProperties;
+import br.kuhn.dev.springboot.repository.IUserRepository;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
@@ -33,6 +35,9 @@ public class JwtTokenProvider {
     @Autowired
     private JwtProperties jwtProperties;
 
+    @Autowired
+    private IUserRepository userRepository;
+
     private SecretKey secretKey;
 
     @PostConstruct
@@ -47,7 +52,8 @@ public class JwtTokenProvider {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Claims claims = Jwts.claims().setSubject(username);
         if (!authorities.isEmpty()) {
-            claims.put(AUTHORITIES_KEY, authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
+            claims.put(AUTHORITIES_KEY,
+                    authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
         }
 
         Date now = new Date();
@@ -70,7 +76,11 @@ public class JwtTokenProvider {
         Collection<? extends GrantedAuthority> authorities = authoritiesClaim == null ? AuthorityUtils.NO_AUTHORITIES
                 : AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesClaim.toString());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        String username = claims.getSubject();
+        User principal = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+
+        principal.setPassword("");
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
@@ -80,6 +90,7 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts
                     .parserBuilder().setSigningKey(this.secretKey).build()
                     .parseClaimsJws(token);
+                    
             // parseClaimsJws will check expiration date. No need do here.
             log.info("expiration date: {}", claims.getBody().getExpiration());
             return true;
