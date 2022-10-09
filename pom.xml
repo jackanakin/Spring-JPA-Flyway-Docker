@@ -18,6 +18,8 @@
 		<postgresql.version>42.3.3</postgresql.version>
 		<flywaydb.version>8.5.13</flywaydb.version>
 		<guava.version>30.1.1-jre</guava.version>
+		<lombok.version>1.18.24</lombok.version>
+		<jjwt.version>0.11.5</jjwt.version>
 	</properties>
 	<dependencies>
 		<!-- springframework -->
@@ -58,10 +60,39 @@
 			<version>${flywaydb.version}</version>
 		</dependency>
 
+		<!-- Google Guava -->
 		<dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+
+		<!-- Lombok -->
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+			<version>${lombok.version}</version>
+        </dependency>
+
+		<!-- jsonwebtoken -->
+		<dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+		<!-- or jjwt-gson if Gson is preferred -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
 	</dependencies>

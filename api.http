@@ -1,8 +1,13 @@
 ###
-POST http://localhost:8080/foos HTTP/1.1
+GET http://localhost:8080/foos HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9VU0VSLFJPTEVfQURNSU4sTk9CT0RZLFJPTEVfTk9CT0RZIiwiaWF0IjoxNjY1MzI2ODQ4LCJleHAiOjE2NjUzMzA0NDh9.GOkKSl-jKsJRLRjqzB_VmW4mJfUEKrhI7648QGajW6A
+
+###
+POST http://localhost:8080/auth/signin HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "version": "0001"
+    "username": "admin",
+    "password": "password"
 }
