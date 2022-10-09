@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.controller;
+package br.kuhn.dev.springboot.foo.controller;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ import com.google.common.base.Preconditions;
 import org.springframework.http.HttpStatus;
 
 import br.kuhn.dev.springboot._common.util.RestPreconditions;
-import br.kuhn.dev.springboot.entity.Foo;
-import br.kuhn.dev.springboot.service.interfaces.IFooService;
+import br.kuhn.dev.springboot.foo.entity.Foo;
+import br.kuhn.dev.springboot.foo.service.interfaces.IFooService;
 
 @RestController
 @RequestMapping("/foos")

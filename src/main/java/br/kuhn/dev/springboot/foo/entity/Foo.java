@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.entity;
+package br.kuhn.dev.springboot.foo.entity;
 
 import java.io.Serializable;
 
