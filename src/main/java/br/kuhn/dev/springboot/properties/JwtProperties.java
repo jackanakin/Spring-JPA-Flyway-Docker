@@ -13,7 +13,7 @@ public class JwtProperties {
     private String secretKey = null;
 
     // validity in milliseconds
-    @Value("${server.secret.validity}")
-    private Long validityInMs = null;
+    @Value("${server.secret.timeout}")
+    private Long timeoutMs = null;
 
 }

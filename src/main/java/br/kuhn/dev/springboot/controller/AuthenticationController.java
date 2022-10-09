@@ -7,12 +7,14 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.kuhn.dev.springboot.dto.security.AuthenticationRequestDTO;
+import br.kuhn.dev.springboot.entity.User;
 import br.kuhn.dev.springboot.security.JwtTokenProvider;
 
 import java.util.HashMap;
@@ -45,5 +47,14 @@ public class AuthenticationController {
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
+    }
+
+    @PostMapping("/signout")
+    public ResponseEntity<?> logoutUser() {
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Long userId = userDetails.getId();
+        // refreshTokenService.deleteByUserId(userId);
+        return ResponseEntity.ok("okok");
     }
 }

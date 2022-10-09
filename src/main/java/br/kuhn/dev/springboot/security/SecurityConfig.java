@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.kuhn.dev.springboot.entity.User;
 import br.kuhn.dev.springboot.repository.IUserRepository;
 
 @Configuration
@@ -55,7 +55,7 @@ public class SecurityConfig {
             String username = authentication.getPrincipal() + "";
             String password = authentication.getCredentials() + "";
 
-            UserDetails user = userDetailsService.loadUserByUsername(username);
+            User user = (User) userDetailsService.loadUserByUsername(username);
 
             if (!encoder.matches(password, user.getPassword())) {
                 throw new BadCredentialsException("Bad credentials");
@@ -65,7 +65,7 @@ public class SecurityConfig {
                 throw new DisabledException("User account is not active");
             }
 
-            return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         };
     }
 }

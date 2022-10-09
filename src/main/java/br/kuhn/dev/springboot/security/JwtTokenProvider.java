@@ -57,7 +57,7 @@ public class JwtTokenProvider {
         }
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + this.jwtProperties.getValidityInMs());
+        Date validity = new Date(now.getTime() + this.jwtProperties.getTimeoutMs());
 
         return Jwts.builder()
                 .setClaims(claims)

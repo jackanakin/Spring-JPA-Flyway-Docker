@@ -11,3 +11,8 @@ content-type: application/json
     "username": "admin",
     "password": "password"
 }
+
+###
+POST http://localhost:8080/auth/signout HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9VU0VSLFJPTEVfQURNSU4iLCJpYXQiOjE2NjUzNDIwMjYsImV4cCI6MTY2NTM0NTYyNn0.isFXiyfS6Co-sND0-1ZzfKXOHnlPh5SOhGjpSGWZjPs
