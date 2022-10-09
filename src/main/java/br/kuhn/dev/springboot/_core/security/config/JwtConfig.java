@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.security;
+package br.kuhn.dev.springboot._core.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

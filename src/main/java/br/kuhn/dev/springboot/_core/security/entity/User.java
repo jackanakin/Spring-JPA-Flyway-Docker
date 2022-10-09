@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.entity;
+package br.kuhn.dev.springboot._core.security.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

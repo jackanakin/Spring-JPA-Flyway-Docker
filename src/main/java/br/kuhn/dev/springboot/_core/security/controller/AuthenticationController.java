@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.controller;
+package br.kuhn.dev.springboot._core.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.kuhn.dev.springboot.dto.security.AuthenticationRequestDTO;
-import br.kuhn.dev.springboot.entity.User;
-import br.kuhn.dev.springboot.security.JwtTokenProvider;
+import br.kuhn.dev.springboot._core.security.dto.request.AuthenticationRequestDTO;
+import br.kuhn.dev.springboot._core.security.entity.User;
+import br.kuhn.dev.springboot._core.security.service.JwtTokenProviderService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProviderService jwtTokenProviderService;
 
     @PostMapping("/signin")
     public ResponseEntity<Object> signin(@RequestBody AuthenticationRequestDTO data) {
@@ -37,7 +37,7 @@ public class AuthenticationController {
             String username = data.getUsername();
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            String token = jwtTokenProvider.createToken(authentication);
+            String token = jwtTokenProviderService.createToken(authentication);
 
             Map<Object, Object> model = new HashMap<>();
             model.put("username", username);

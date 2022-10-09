@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.dto.security;
+package br.kuhn.dev.springboot._core.security.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.security;
+package br.kuhn.dev.springboot._core.security.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -13,9 +13,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import br.kuhn.dev.springboot.entity.User;
-import br.kuhn.dev.springboot.properties.JwtProperties;
-import br.kuhn.dev.springboot.repository.IUserRepository;
+import br.kuhn.dev.springboot._core.security.entity.User;
+import br.kuhn.dev.springboot._core.security.properties.JwtProperties;
+import br.kuhn.dev.springboot._core.security.repository.IUserRepository;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtTokenProvider {
+public class JwtTokenProviderService {
 
     private static final String AUTHORITIES_KEY = "roles";
 

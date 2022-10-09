@@ -1,8 +1,8 @@
-package br.kuhn.dev.springboot.util;
+package br.kuhn.dev.springboot._common.util;
 
 import org.springframework.http.HttpStatus;
 
-import br.kuhn.dev.springboot.exception.ResourceNotFoundException;
+import br.kuhn.dev.springboot._common.exception.ResourceNotFoundException;
 
 /**
  * Simple static methods to be called at the start of your own methods to verify
@@ -23,8 +23,8 @@ public final class RestPreconditions {
      * @param expression
      *                   has value true if found, otherwise false
      * @throws ResourceNotFoundException
-     *                                     if expression is false, means value not
-     *                                     found.
+     *                                   if expression is false, means value not
+     *                                   found.
      */
     public static void checkFound(final boolean expression) {
         if (!expression) {
@@ -36,7 +36,7 @@ public final class RestPreconditions {
      * Check if some value was found, otherwise throw exception.
      * 
      * @param resource
-     *                   has value true if found, otherwise false
+     *                 has value true if found, otherwise false
      * @throws ResourceNotFoundException
      *                                   if expression is false, means value not
      *                                   found.

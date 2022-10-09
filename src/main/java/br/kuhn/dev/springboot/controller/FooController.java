@@ -17,9 +17,9 @@ import com.google.common.base.Preconditions;
 
 import org.springframework.http.HttpStatus;
 
+import br.kuhn.dev.springboot._common.util.RestPreconditions;
 import br.kuhn.dev.springboot.entity.Foo;
 import br.kuhn.dev.springboot.service.interfaces.IFooService;
-import br.kuhn.dev.springboot.util.RestPreconditions;
 
 @RestController
 @RequestMapping("/foos")

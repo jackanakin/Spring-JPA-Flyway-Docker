@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.security;
+package br.kuhn.dev.springboot._core.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,15 +18,17 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.kuhn.dev.springboot.entity.User;
-import br.kuhn.dev.springboot.repository.IUserRepository;
+import br.kuhn.dev.springboot._core.security.entity.User;
+import br.kuhn.dev.springboot._core.security.repository.IUserRepository;
+import br.kuhn.dev.springboot._core.security.service.JwtTokenAuthenticationFilterService;
+import br.kuhn.dev.springboot._core.security.service.JwtTokenProviderService;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
     SecurityFilterChain springWebFilterChain(HttpSecurity http,
-            JwtTokenProvider tokenProvider) throws Exception {
+            JwtTokenProviderService tokenProvider) throws Exception {
         return http
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
@@ -38,7 +40,7 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.GET, "/foos/**").hasRole("NOBODY")
                         .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
-                .addFilterBefore(new JwtTokenAuthenticationFilter(tokenProvider),
+                .addFilterBefore(new JwtTokenAuthenticationFilterService(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

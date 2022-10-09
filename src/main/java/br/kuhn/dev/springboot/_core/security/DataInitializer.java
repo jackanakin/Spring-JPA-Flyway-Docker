@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot;
+package br.kuhn.dev.springboot._core.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,8 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import br.kuhn.dev.springboot.entity.User;
-import br.kuhn.dev.springboot.repository.IUserRepository;
+import br.kuhn.dev.springboot._core.security.entity.User;
+import br.kuhn.dev.springboot._core.security.repository.IUserRepository;
 
 import java.util.Arrays;
 

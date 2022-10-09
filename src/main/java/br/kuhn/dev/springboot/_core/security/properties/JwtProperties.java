@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.properties;
+package br.kuhn.dev.springboot._core.security.properties;
 
 import lombok.Data;
 
