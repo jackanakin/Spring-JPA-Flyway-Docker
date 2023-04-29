@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot._common.controller;
+package br.kuhn.dev.springboot._core.properties.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;

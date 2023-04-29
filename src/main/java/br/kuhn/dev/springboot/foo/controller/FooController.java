@@ -1,6 +1,7 @@
 package br.kuhn.dev.springboot.foo.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,19 +12,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Preconditions;
 
 import org.springframework.http.HttpStatus;
 
-import br.kuhn.dev.springboot._common.util.RestPreconditions;
+import br.kuhn.dev.springboot._common.controller.BaseController;
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.service.interfaces.IFooService;
 
-@RestController
 @RequestMapping("/foos")
-class FooController {
+class FooController extends BaseController {
 
     @Autowired
     private IFooService service;
@@ -34,28 +33,30 @@ class FooController {
     }
 
     @GetMapping(value = "/{id}")
-    public Foo findById(@PathVariable("id") Long id) {
-        return RestPreconditions.checkFound(service.findById(id));
+    public Foo findById(@PathVariable("id") UUID id) {
+        return super.checkFound(service.findById(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody Foo resource) {
+    public UUID create(@RequestBody Foo resource) {
         Preconditions.checkNotNull(resource);
         return service.create(resource).getId();
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") Long id, @RequestBody Foo resource) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable("id") UUID id, @RequestBody Foo resource) {
         Preconditions.checkNotNull(resource);
-        RestPreconditions.checkFound(service.findById(resource.getId()));
+        
+        checkFound(service.findById(resource.getId()));
+        
         service.update(resource);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") UUID id) {
         service.deleteById(id);
     }
 

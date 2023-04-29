@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot._common.aop;
+package br.kuhn.dev.springboot._core.aop;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,6 +1,7 @@
 package br.kuhn.dev.springboot.foo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.repository.IFooRepository;
@@ -20,7 +21,7 @@ public class FooService implements IFooService {
 
     @Override
     @Transactional(readOnly = true)
-    public Foo findById(final long id) {
+    public Foo findById(final UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -46,7 +47,7 @@ public class FooService implements IFooService {
     }
 
     @Override
-    public void deleteById(final long entityId) {
+    public void deleteById(final UUID entityId) {
         repository.deleteById(entityId);
     }
 }
