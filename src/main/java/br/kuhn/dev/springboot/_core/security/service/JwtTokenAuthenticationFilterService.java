@@ -1,7 +1,7 @@
 package br.kuhn.dev.springboot._core.security.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,10 +14,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@Slf4j
 public class JwtTokenAuthenticationFilterService extends GenericFilterBean {
 
     public static final String HEADER_PREFIX = "Bearer ";
@@ -29,7 +29,6 @@ public class JwtTokenAuthenticationFilterService extends GenericFilterBean {
             throws IOException, ServletException {
 
         String token = resolveToken((HttpServletRequest) req);
-        log.info("Extracting token from HttpServletRequest: {}", token);
 
         if (token != null && jwtTokenProviderService.validateToken(token)) {
             Authentication auth = jwtTokenProviderService.getAuthentication(token);

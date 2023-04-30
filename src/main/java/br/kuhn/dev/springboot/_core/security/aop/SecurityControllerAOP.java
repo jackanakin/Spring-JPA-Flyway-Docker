@@ -34,7 +34,7 @@ public class SecurityControllerAOP {
 		long end = System.currentTimeMillis();
 		
 		long duration = end - begin;
-		log.warn("\n=====> Duration: " + duration / 1000.0 + " seconds");
+		// log.info("\n=====> Duration: " + duration / 1000.0 + " seconds");
 		
 		return result;
 	}

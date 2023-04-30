@@ -1,8 +1,8 @@
 package br.kuhn.dev.springboot._common.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -16,11 +16,13 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
@@ -41,19 +43,4 @@ public abstract class BaseEntity implements Serializable {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof BaseEntity))
-            return false;
-        BaseEntity that = (BaseEntity) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

@@ -30,3 +30,56 @@ Run proxy container:
 >docker run --net spring_network -d -p 80:80 --name springproxy jackanakin/spring_proxy
 
 Go to http://localhost:80/person to list all persons from database
+
+### 3. Developing:
+
+1. Create a database:
+> docker run -d --name springdb -p 5432:5432 -e POSTGRES_USER=springboot -e POSTGRES_DB=springboot -e POSTGRES_PASSWORD=springbootpasswd postgres
+
+> check "application.properties" for custom settings
+
+Project structure:
+->  docker: docker deploy related code
+
+->  src/main/java/br/kuhn/dev/springboot
+->      _common: common classes and utilities like BaseEntity, BaseRepository and etc.
+->      _core:   main functionalities like AAA, logging, exception handling, and etc.
+->      foo:     domain related code
+
+->  src/main/resources
+->      application.properties: configurations like database credentials, flyway settings, server port and etc.
+->      db/migration: flyway .sql migrations
+
+
+Have:
+
+Spring Security with customized User via UserDetails and Authorization filter with JwtToken
+JPA + Flyway (optional) + Lombok + MapStruct + Bean validation
+ControllerAdvice for Rest endpoints exception handling
+Spring CommandLineRunner for initialization operations
+Docker and external properties with application.properties
+Aspect Oriented Programming for custom operations
+Base classes to reduce boiler plate like BaseEntity, BaseDto, BaseRepository, BaseService and BaseController
+
+
+TODO
+
+Swagger
+tests
+api-versioning
+brute-force
+rest-template for integration test
+unit testing
+logging with ELK Stack
+distributed tracing
+spring cloud + eureka + gateway
+oauth2 + keycloak
+sagas
+JMS
+i18n
+Insomnia or Postman
+Spring cloud microservice
+CI Build
+PageImpl
+Session management or keycloak
+hot reload

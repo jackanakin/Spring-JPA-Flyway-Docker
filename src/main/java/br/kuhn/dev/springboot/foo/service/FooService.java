@@ -1,8 +1,11 @@
 package br.kuhn.dev.springboot.foo.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import br.kuhn.dev.springboot._common.exception.ResourceNotFoundException;
+import br.kuhn.dev.springboot.foo.dto.FooDto;
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.repository.IFooRepository;
 import br.kuhn.dev.springboot.foo.service.interfaces.IFooService;
@@ -10,6 +13,7 @@ import br.kuhn.dev.springboot.foo.service.interfaces.IFooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.collect.Lists;
 
 @Service
@@ -21,8 +25,8 @@ public class FooService implements IFooService {
 
     @Override
     @Transactional(readOnly = true)
-    public Foo findById(final UUID id) {
-        return repository.findById(id).orElse(null);
+    public Optional<Foo> findById(final UUID id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -37,7 +41,12 @@ public class FooService implements IFooService {
     }
 
     @Override
-    public Foo update(final Foo entity) {
+    public Foo update(final FooDto dto, final UUID id) {
+        Foo entity = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
+
+        entity.setName(dto.getName());
+        entity.setType(dto.getType());
+
         return repository.save(entity);
     }
 
@@ -47,7 +56,9 @@ public class FooService implements IFooService {
     }
 
     @Override
-    public void deleteById(final UUID entityId) {
-        repository.deleteById(entityId);
+    public void deleteById(final UUID id) {
+        Foo entity = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
+
+        repository.delete(entity);
     }
 }

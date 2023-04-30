@@ -1,18 +1,19 @@
 package br.kuhn.dev.springboot._common.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface BaseService<T> {
-    public List<T> findAll();
+public interface BaseService<T, D> {
+    List<T> findAll();
 
-    public T create(final T entity);
+    T create(final T entity);
 
-    public T update(final T entity);
+    T update(final D dto, final UUID id);
 
-    public void delete(final T entity);
+    void delete(final T entity);
 
-    public void deleteById(final UUID id);
+    void deleteById(final UUID id);
 
-    public T findById(final UUID id);
+    Optional<T> findById(final UUID id);
 }

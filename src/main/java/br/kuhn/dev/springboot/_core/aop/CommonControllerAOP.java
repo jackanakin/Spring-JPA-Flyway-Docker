@@ -42,7 +42,7 @@ public class CommonControllerAOP {
             incoming.append(arg.toString());
         }
 
-        log.warn(incoming.toString());
+        log.info(incoming.toString());
 
         long begin = System.currentTimeMillis();
 
@@ -59,7 +59,7 @@ public class CommonControllerAOP {
         long end = System.currentTimeMillis();
 
         long duration = end - begin;
-        log.warn("Duration: " + duration / 1000.0 + " seconds");
+        // log.info("Duration: " + duration / 1000.0 + " seconds");
 
         return result;
     }

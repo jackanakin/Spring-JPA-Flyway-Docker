@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.kuhn.dev.springboot._common.controller.BaseController;
 import br.kuhn.dev.springboot._core.security.dto.request.AuthenticationRequestDTO;
 import br.kuhn.dev.springboot._core.security.entity.User;
 import br.kuhn.dev.springboot._core.security.service.JwtTokenProviderService;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthenticationController {
+public class AuthenticationController extends BaseController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
