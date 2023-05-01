@@ -13,6 +13,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot</name>
 	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
+
 	<properties>
 		<springboot.version>2.5.12</springboot.version>
 		<postgresql.version>42.3.3</postgresql.version>
@@ -24,6 +26,7 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<lombok.mapstruct.binding>0.1.0</lombok.mapstruct.binding>
 		<junit.version>4.13.2</junit.version>
+		<junit.engine.version>5.9.3</junit.engine.version>
 	</properties>
 	<dependencies>
 		<!-- springframework -->
@@ -129,6 +132,12 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		    <dependency>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+				<version>${junit.engine.version}</version>
+				<scope>test</scope>
+			</dependency>
 	</dependencies>
 
 	<build>
