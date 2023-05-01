@@ -1,7 +1,6 @@
 package br.kuhn.dev.springboot._core.properties.controller;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,16 +21,19 @@ public class PropertiesController {
 
     @Value("${logging.level.root}")
     private String loggingLevel;
-    
-    @GetMapping("/")
-    public String get() {
-        StringBuilder applicationProperties = new StringBuilder();
-        applicationProperties.append(serverPort).append(";").append(applicationName)
-                .append(";").append(datasourceUrl).append(";")
-                .append(flywayEnabled).append(";").append(flywayEnabled).append(";")
-                .append(loggingLevel).append(";");
 
-        System.out.println(applicationProperties);
-        return applicationProperties.toString();
-    }
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+    
+    // @GetMapping("/")
+    // public String get() {
+    //     StringBuilder applicationProperties = new StringBuilder();
+    //     applicationProperties.append(serverPort).append(";").append(applicationName)
+    //             .append(";").append(datasourceUrl).append(";")
+    //             .append(flywayEnabled).append(";").append(flywayEnabled).append(";")
+    //             .append(loggingLevel).append(";");
+
+    //     System.out.println(applicationProperties);
+    //     return applicationProperties.toString();
+    // }
 }

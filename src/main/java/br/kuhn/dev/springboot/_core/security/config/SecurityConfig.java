@@ -34,11 +34,21 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeRequests(c -> c
-                        .antMatchers("/auth/signin").permitAll()
+                        // authentication
+                        .antMatchers("/auth").permitAll()
+
+                        // Swagger
+                        .antMatchers("/swagger-ui/**").permitAll()
+                        .antMatchers("/swagger-resources/**").permitAll()
+                        .antMatchers("/v2/api-docs").permitAll()
+                        
                         //.antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
-                        // .antMatchers(HttpMethod.GET, "/foos/**").hasRole("USER")
-                        // .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        //.antMatchers(HttpMethod.GET, "/foos/**").hasRole("USER")
+                        //.antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
+
+                        // anything else must be authenticated
+                        .anyRequest().authenticated()
+                        )
                 .addFilterBefore(new JwtTokenAuthenticationFilterService(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -1,12 +1,11 @@
 package br.kuhn.dev.springboot.foo.entity;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 public enum FooTypeEnum {
-    BAR, CAR;
+    BAR("Bar"), CAR("Car");
 
-    @JsonValue
-    public int toValue() {
-        return ordinal();
+    private String type;
+
+    FooTypeEnum(String type) {
+        this.type = type;
     }
 }

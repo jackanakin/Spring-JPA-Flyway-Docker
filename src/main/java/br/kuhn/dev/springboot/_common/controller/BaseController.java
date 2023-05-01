@@ -1,10 +1,19 @@
 package br.kuhn.dev.springboot._common.controller;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import br.kuhn.dev.springboot._common.exception.ResourceNotFoundException;
 
-public abstract class BaseController {
+public abstract class BaseController<E, D> {
+
+    protected Function<E, D> entityToDto;
+    protected Function<D, E> dtoToEntity;
+
+    public BaseController(Function<E, D> entityToDto, Function<D, E> dtoToEntity) {
+        this.entityToDto = entityToDto;
+        this.dtoToEntity = dtoToEntity;
+    }
 
     /**
      * Check if some value was found, otherwise throw exception.

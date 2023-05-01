@@ -3,6 +3,7 @@ package br.kuhn.dev.springboot._common;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,9 @@ public abstract class BaseControllerTest {
         @Autowired
         private AuthenticationService authenticationService;
 
+        @Value("${server.servlet.context-path}")
+        private String contextPath;
+
         private String rootUri;
         private String username = "admin";
         private String password = "password";
@@ -46,7 +50,11 @@ public abstract class BaseControllerTest {
         }
 
         private String uri(String path) {
-                return this.rootUri + "/" + path;
+                if (this.contextPath.endsWith("/")) {
+                        return this.contextPath.substring(0, this.contextPath.length() - 1) + this.rootUri + "/" + path;
+                }
+
+                return this.contextPath + this.rootUri + "/" + path;
         }
 
         protected ResultActions delete(String path, java.lang.Object... urlVariables) throws Exception {

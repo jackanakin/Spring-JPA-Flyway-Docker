@@ -1,8 +1,8 @@
 package br.kuhn.dev.springboot.foo.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -26,36 +26,38 @@ import br.kuhn.dev.springboot.foo.service.interfaces.IFooService;
 
 @RestController
 @RequestMapping("/foo")
-class FooController extends BaseController {
+class FooController extends BaseController<Foo, FooDto> {
 
     @Autowired
     private IFooService service;
 
     @Autowired
-    private FooMapper fooMapper;
+    public FooController(FooMapper fooMapper) {
+        super((entity) -> fooMapper.FooToFooDto(entity), (dto) -> fooMapper.FooDtoToFoo(dto));
+    }
 
     @GetMapping
-    public List<Foo> findAll() {
-        return service.findAll();
+    public List<FooDto> findAll() {
+        return service.findAll().stream().map(entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{id}")
     public FooDto findById(@PathVariable("id") UUID id) {
-        Optional<Foo> entity = service.findById(id);
-
-        return fooMapper.FooToFooDto(checkFound(entity));
+        return entityToDto.apply(checkFound(service.findById(id)));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FooDto create(@RequestBody @Valid FooDto dto) {
-        return fooMapper.FooToFooDto(service.create(fooMapper.FooDtoToFoo(dto)));
+        Foo result = service.create(dtoToEntity.apply(dto));
+
+        return entityToDto.apply(result);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FooDto update(@PathVariable("id") UUID id, @RequestBody @Valid FooDto dto) {        
-        return fooMapper.FooToFooDto(service.update(dto, id));
+    public FooDto update(@PathVariable("id") UUID id, @RequestBody @Valid FooDto dto) {
+        return entityToDto.apply(service.update(dto, id));
     }
 
     @DeleteMapping(value = "/{id}")

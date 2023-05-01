@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthenticationController extends BaseController {
+public class AuthenticationController extends BaseController<User, AuthenticationRequestDTO> {
+
+    public AuthenticationController() {
+        super(null, null);
+    }
 
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping("/signin")
+    @PostMapping()
     public ResponseEntity<Object> signin(@RequestBody AuthenticationRequestDTO data) {
 
         try {
@@ -44,7 +49,7 @@ public class AuthenticationController extends BaseController {
         }
     }
 
-    @PostMapping("/signout")
+    @DeleteMapping()
     public ResponseEntity<?> logoutUser() {
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
