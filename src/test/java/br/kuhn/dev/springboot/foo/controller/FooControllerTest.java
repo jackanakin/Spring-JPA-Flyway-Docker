@@ -28,93 +28,99 @@ import br.kuhn.dev.springboot.foo.service.FooService;
 @ComponentScan(basePackages = "br.kuhn.dev.springboot.foo.mapper")
 public class FooControllerTest extends BaseControllerTest {
 
-    @MockBean
-    FooService mockService;
+        @MockBean
+        FooService mockService;
 
-    FooDto validDto;
-    Foo expected;
-    UUID id;
+        FooDto validDto;
+        Foo expected;
+        UUID id;
 
-    public FooControllerTest() {
-        super(FooDto.class);
-    }
+        public FooControllerTest() {
+                super("/foo", FooDto.class);
+        }
 
-    @BeforeEach
-    public void setUp() {
-        id = UUID.randomUUID();
+        @BeforeEach
+        public void setUp() {
+                id = UUID.randomUUID();
 
-        validDto = FooDto.builder()
-                .name("Nice Ale")
-                .type(FooTypeEnum.BAR)
-                .build();
+                validDto = FooDto.builder()
+                                .name("Nice Ale")
+                                .type(FooTypeEnum.BAR)
+                                .build();
 
-        expected = Foo.builder().id(id).name(validDto.getName()).type(validDto.getType()).build();
-    }
+                expected = Foo.builder().id(id).name(validDto.getName()).type(validDto.getType()).build();
+        }
 
-    @Test
-    public void deleteById() throws Exception {
-        delete("/foo/{id}", id.toString())
-                .andExpect(status().isNoContent())
-                .andDo(document("delete-foo",
-                        pathParameters(
-                                parameterWithName("id").description("UUID of desired foo to delete."))));
-    }
+        @Test
+        public void deleteById() throws Exception {
+                delete("{id}", id.toString())
+                                .andExpect(status().isNoContent())
+                                .andDo(document("delete-foo",
+                                                pathParameters(
+                                                                parameterWithName("id").description(
+                                                                                "UUID of desired foo to delete."))));
+        }
 
-    @Test
-    public void shouldGetById() throws Exception {
-        given(mockService.findById(any())).willReturn(Optional.of(expected));
+        @Test
+        public void shouldGetById() throws Exception {
+                given(mockService.findById(any())).willReturn(Optional.of(expected));
 
-        get("/foo/{id}", id.toString())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                .andExpect(jsonPath("$.name", is(expected.getName())))
-                .andExpect(jsonPath("$.type", is(expected.getType().ordinal())))
-                .andDo(document("get-foo",
-                        pathParameters(
-                                parameterWithName("id").description("UUID of desired foo to get.")),
-                        responseFields(
-                                fields.withPath("id").description("Id of the foo"),
-                                fields.withPath("name").description("Name of the foo"),
-                                fields.withPath("type").description("Type of the foo"))));
-    }
+                get("{id}", id.toString())
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
+                                .andExpect(jsonPath("$.name", is(expected.getName())))
+                                .andExpect(jsonPath("$.type", is(expected.getType().ordinal())))
+                                .andDo(document("get-foo",
+                                                pathParameters(
+                                                                parameterWithName("id").description(
+                                                                                "UUID of desired foo to get.")),
+                                                responseFields(
+                                                                fields.withPath("id").description("Id of the foo"),
+                                                                fields.withPath("name").description("Name of the foo"),
+                                                                fields.withPath("type")
+                                                                                .description("Type of the foo"))));
+        }
 
-    @Test
-    public void shouldUpdate() throws Exception {
-        String dtoJson = objectMapper.writeValueAsString(validDto);
+        @Test
+        public void shouldUpdate() throws Exception {
+                String dtoJson = objectMapper.writeValueAsString(validDto);
 
-        given(mockService.update(any(), any())).willReturn(expected);
+                given(mockService.update(any(), any())).willReturn(expected);
 
-        put("/foo/{id}", dtoJson, id.toString())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                .andExpect(jsonPath("$.name", is(expected.getName())))
-                .andDo(document("put-foo",
-                        pathParameters(
-                                parameterWithName("id").description("UUID of desired foo to update.")),
-                        requestFields(
-                                fields.withPath("id").ignored(),
-                                fields.withPath("name").description("Name of the foo"),
-                                fields.withPath("type").description("Type of the foo")),
-                        responseFields(
-                                fields.withPath("id").description("Id of the foo"),
-                                fields.withPath("name").description("Name of the foo"),
-                                fields.withPath("type").description("Type of the foo"))));
-    }
+                put("{id}", dtoJson, id.toString())
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
+                                .andExpect(jsonPath("$.name", is(expected.getName())))
+                                .andDo(document("put-foo",
+                                                pathParameters(
+                                                                parameterWithName("id").description(
+                                                                                "UUID of desired foo to update.")),
+                                                requestFields(
+                                                                fields.withPath("id").ignored(),
+                                                                fields.withPath("name").description("Name of the foo"),
+                                                                fields.withPath("type").description("Type of the foo")),
+                                                responseFields(
+                                                                fields.withPath("id").description("Id of the foo"),
+                                                                fields.withPath("name").description("Name of the foo"),
+                                                                fields.withPath("type")
+                                                                                .description("Type of the foo"))));
+        }
 
-    @Test
-    public void shouldCreate() throws Exception {
-        String dtoJson = objectMapper.writeValueAsString(validDto);
+        @Test
+        public void shouldCreate() throws Exception {
+                String dtoJson = objectMapper.writeValueAsString(validDto);
 
-        given(mockService.create(any())).willReturn(expected);
+                given(mockService.create(any())).willReturn(expected);
 
-        post("/foo", dtoJson)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                .andExpect(jsonPath("$.name", is(expected.getName())))
-                .andDo(document("post-foo",
-                        requestFields(
-                                fields.withPath("id").ignored(),
-                                fields.withPath("name").description("Name of the foo"),
-                                fields.withPath("type").description("Type of the foo"))));
-    }
+                post("", dtoJson)
+                                .andExpect(status().isCreated())
+                                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
+                                .andExpect(jsonPath("$.name", is(expected.getName())))
+                                .andDo(document("post-foo",
+                                                requestFields(
+                                                                fields.withPath("id").ignored(),
+                                                                fields.withPath("name").description("Name of the foo"),
+                                                                fields.withPath("type")
+                                                                                .description("Type of the foo"))));
+        }
 }
