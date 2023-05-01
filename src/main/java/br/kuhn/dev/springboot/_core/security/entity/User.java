@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,11 +22,11 @@ import br.kuhn.dev.springboot._common.entity.BaseEntity;
 
 @Entity
 @Table(name = "users")
-@Builder
-@Getter
-@Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String username;

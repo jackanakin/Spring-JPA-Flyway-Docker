@@ -2,7 +2,6 @@ package br.kuhn.dev.springboot._core.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,8 +36,8 @@ public class SecurityConfig {
                 .authorizeRequests(c -> c
                         .antMatchers("/auth/signin").permitAll()
                         //.antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
-                        .antMatchers(HttpMethod.GET, "/foos/**").hasRole("USER")
-                        .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
+                        // .antMatchers(HttpMethod.GET, "/foos/**").hasRole("USER")
+                        // .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtTokenAuthenticationFilterService(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)

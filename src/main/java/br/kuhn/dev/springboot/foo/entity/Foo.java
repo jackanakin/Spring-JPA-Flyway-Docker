@@ -8,15 +8,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import br.kuhn.dev.springboot._common.entity.BaseEntity;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "foos")
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Foo extends BaseEntity {
 
     @Column(nullable = false)

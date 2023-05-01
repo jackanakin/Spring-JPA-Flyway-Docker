@@ -22,7 +22,8 @@
 		<jjwt.version>0.11.5</jjwt.version>
 		<aspectj.version>1.9.9.1</aspectj.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
+		<lombok.mapstruct.binding>0.1.0</lombok.mapstruct.binding>
+		<junit.version>4.13.2</junit.version>
 	</properties>
 	<dependencies>
 		<!-- springframework -->
@@ -47,6 +48,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,6 +105,7 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
+
 		<!-- or jjwt-gson if Gson is preferred -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -115,6 +122,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

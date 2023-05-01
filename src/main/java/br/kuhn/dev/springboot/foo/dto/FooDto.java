@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import br.kuhn.dev.springboot._common.dto.BaseDto;
 import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
@@ -15,6 +16,7 @@ import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
+@SuperBuilder
 public class FooDto extends BaseDto {
 
     @NotBlank(message = "Name cannot be empty")
