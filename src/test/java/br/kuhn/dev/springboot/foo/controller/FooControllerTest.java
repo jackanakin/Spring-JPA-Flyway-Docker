@@ -1,13 +1,12 @@
 package br.kuhn.dev.springboot.foo.controller;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import static org.hamcrest.core.Is.is;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,7 +30,7 @@ public class FooControllerTest extends BaseControllerTest {
     Foo expected;
     UUID id;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         id = UUID.randomUUID();
 

@@ -1,13 +1,13 @@
 package br.kuhn.dev.springboot._common;
 
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.kuhn.dev.springboot._core.security.service.AuthenticationService;
 import br.kuhn.dev.springboot._core.security.service.JwtTokenAuthenticationFilterService;
 
-@SpringBootTest
 @AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
+@SpringBootTest
+@ExtendWith(SpringExtension.class)
 public abstract class BaseControllerTest {
         private String username = "admin";
         private String password = "password";

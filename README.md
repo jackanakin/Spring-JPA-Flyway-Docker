@@ -86,3 +86,4 @@ CI Build
 PageImpl
 Session management or keycloak
 hot reload
+image;files upload/download
