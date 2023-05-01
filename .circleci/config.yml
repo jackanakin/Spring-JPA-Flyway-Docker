@@ -14,7 +14,7 @@ jobs:
     docker:
       - image: cimg/openjdk:11.0
 
-      - image: cimg/postgres:latest
+      - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: springboot
           POSTGRES_DB: springboot
