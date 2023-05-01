@@ -69,7 +69,7 @@ public class FooControllerTest extends BaseControllerTest {
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
                                 .andExpect(jsonPath("$.name", is(expected.getName())))
-                                .andExpect(jsonPath("$.type", is(expected.getType().ordinal())))
+                                .andExpect(jsonPath("$.type", is(expected.getType().name())))
                                 .andDo(document("get-foo",
                                                 pathParameters(
                                                                 parameterWithName("id").description(
