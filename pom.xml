@@ -24,7 +24,7 @@
 		<jjwt.version>0.11.5</jjwt.version>
 		<aspectj.version>1.9.9.1</aspectj.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<lombok.mapstruct.binding>0.1.0</lombok.mapstruct.binding>
+		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
 		<junit.version>5.9.3</junit.version>
 		<junit.engine.version>5.9.3</junit.engine.version>
 	</properties>
@@ -38,6 +38,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<!-- Remove JUnit from spring bundle so we can import a different version later -->
+			<exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -61,11 +68,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<!-- ...end -->
+
+		<!-- MapStruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+		<!-- ...end -->
 
 		<!-- postgresql -->
 		<dependency>
@@ -73,6 +84,7 @@
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>
+		<!-- ...end -->
 
 		<!-- Flyway -->
 		<dependency>
@@ -80,6 +92,7 @@
 			<artifactId>flyway-core</artifactId>
 			<version>${flywaydb.version}</version>
 		</dependency>
+		<!-- ...end -->
 
 		<!-- Google Guava -->
 		<dependency>
@@ -87,6 +100,7 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+		<!-- ...end -->
 
 		<!-- Lombok -->
 		<dependency>
@@ -95,14 +109,17 @@
             <optional>true</optional>
 			<version>${lombok.version}</version>
         </dependency>
+		<!-- ...end -->
 
+		<!-- JWT Token -->
 		<!-- jsonwebtoken -->
 		<dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
-        <dependency>
+        
+		<dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>${jjwt.version}</version>
@@ -116,7 +133,9 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
+		<!-- ...end -->
 
+		<!-- AOP -->
 		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -124,7 +143,9 @@
 			<version>${aspectj.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-
+		<!-- ...end -->
+		
+		<!-- Unit testing -->
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -138,6 +159,16 @@
 			<version>${junit.engine.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- ...end -->
+
+		<!-- Rest Docs -->
+		<dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
+		<!-- ...end -->
+
 	</dependencies>
 
 	<build>
@@ -146,6 +177,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!-- MapStruct <-> Lombok -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -173,6 +206,63 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
+			<!-- ...end -->
+
+			<!-- RestDocs -->
+			<plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>2.2.2</version>
+                <executions>
+                    <execution>
+                        <id>generate-docs</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.restdocs</groupId>
+                        <artifactId>spring-restdocs-asciidoctor</artifactId>
+                        <version>${spring-restdocs.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+			<!-- Resource folder -->
+			<plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/static/docs
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.build.directory}/generated-docs
+                                    </directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			<!-- ...end -->
+
 		</plugins>
 	</build>
 

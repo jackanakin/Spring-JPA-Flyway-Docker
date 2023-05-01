@@ -8,9 +8,13 @@ import static org.hamcrest.core.Is.is;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +25,7 @@ import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
 import br.kuhn.dev.springboot.foo.service.FooService;
 
+@ComponentScan(basePackages = "br.kuhn.dev.springboot.foo.mapper")
 public class FooControllerTest extends BaseControllerTest {
 
     @MockBean
@@ -29,6 +34,10 @@ public class FooControllerTest extends BaseControllerTest {
     FooDto validDto;
     Foo expected;
     UUID id;
+
+    public FooControllerTest() {
+        super(FooDto.class);
+    }
 
     @BeforeEach
     public void setUp() {
@@ -44,18 +53,29 @@ public class FooControllerTest extends BaseControllerTest {
 
     @Test
     public void deleteById() throws Exception {
-        delete("/foo/" + id.toString())
-                .andExpect(status().isNoContent());
+        delete("/foo/{id}", id.toString())
+                .andExpect(status().isNoContent())
+                .andDo(document("delete-foo",
+                        pathParameters(
+                                parameterWithName("id").description("UUID of desired foo to delete."))));
     }
 
     @Test
     public void shouldGetById() throws Exception {
         given(mockService.findById(any())).willReturn(Optional.of(expected));
 
-        get("/foo/" + id.toString())
+        get("/foo/{id}", id.toString())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                .andExpect(jsonPath("$.name", is(expected.getName())));
+                .andExpect(jsonPath("$.name", is(expected.getName())))
+                .andExpect(jsonPath("$.type", is(expected.getType().ordinal())))
+                .andDo(document("get-foo",
+                        pathParameters(
+                                parameterWithName("id").description("UUID of desired foo to get.")),
+                        responseFields(
+                                fields.withPath("id").description("Id of the foo"),
+                                fields.withPath("name").description("Name of the foo"),
+                                fields.withPath("type").description("Type of the foo"))));
     }
 
     @Test
@@ -64,10 +84,21 @@ public class FooControllerTest extends BaseControllerTest {
 
         given(mockService.update(any(), any())).willReturn(expected);
 
-        put("/foo/" + id.toString(), dtoJson)
+        put("/foo/{id}", dtoJson, id.toString())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                .andExpect(jsonPath("$.name", is(expected.getName())));
+                .andExpect(jsonPath("$.name", is(expected.getName())))
+                .andDo(document("put-foo",
+                        pathParameters(
+                                parameterWithName("id").description("UUID of desired foo to update.")),
+                        requestFields(
+                                fields.withPath("id").ignored(),
+                                fields.withPath("name").description("Name of the foo"),
+                                fields.withPath("type").description("Type of the foo")),
+                        responseFields(
+                                fields.withPath("id").description("Id of the foo"),
+                                fields.withPath("name").description("Name of the foo"),
+                                fields.withPath("type").description("Type of the foo"))));
     }
 
     @Test
@@ -79,6 +110,11 @@ public class FooControllerTest extends BaseControllerTest {
         post("/foo", dtoJson)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                .andExpect(jsonPath("$.name", is(expected.getName())));
+                .andExpect(jsonPath("$.name", is(expected.getName())))
+                .andDo(document("post-foo",
+                        requestFields(
+                                fields.withPath("id").ignored(),
+                                fields.withPath("name").description("Name of the foo"),
+                                fields.withPath("type").description("Type of the foo"))));
     }
 }
