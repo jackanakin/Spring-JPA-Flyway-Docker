@@ -1,23 +1,29 @@
-package br.kuhn.dev.springboot._core.aop;
+package br.kuhn.dev.springboot._core.logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import br.kuhn.dev.springboot._common.util.HttpServletRequestUtil;
-import br.kuhn.dev.springboot._core.security.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
+import br.kuhn.dev.springboot._common.util.HttpServletRequestUtil;
+import br.kuhn.dev.springboot._core.user.entity.User;
+
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Aspect
 @Slf4j
 @Component
-public class CommonControllerAOP {
+public class ControllerLogger {
 
     @Around("execution(* br.kuhn.dev.springboot.*.controller.*.*(..))")
     public Object aroundControllers(
@@ -39,7 +45,8 @@ public class CommonControllerAOP {
                 .append(request.getRequestURL().toString());
 
         for (Object arg : theProceedingJoinPoint.getArgs()) {
-            incoming.append(arg.toString());
+            if (arg != null)
+                incoming.append(arg.toString());
         }
 
         log.info(incoming.toString());

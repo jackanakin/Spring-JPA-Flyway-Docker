@@ -13,9 +13,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import br.kuhn.dev.springboot._core.security.entity.User;
 import br.kuhn.dev.springboot._core.security.properties.JwtProperties;
-import br.kuhn.dev.springboot._core.security.repository.IUserRepository;
+import br.kuhn.dev.springboot._core.user.entity.User;
+import br.kuhn.dev.springboot._core.user.repository.IUserRepository;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
@@ -25,6 +25,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor

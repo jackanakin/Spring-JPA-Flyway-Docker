@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot._core.security.aop;
+package br.kuhn.dev.springboot._core.security.logger;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Aspect
 @Slf4j
 @Component
-public class SecurityControllerAOP {
+public class SecurityLogger {
     
     @Around("execution(* br.kuhn.dev.springboot._core.security.controller.*.*(..))")
 	public Object aroundGetFortune(

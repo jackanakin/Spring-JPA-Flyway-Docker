@@ -1,10 +1,9 @@
-package br.kuhn.dev.springboot._core.security.entity;
+package br.kuhn.dev.springboot._core.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -20,13 +19,16 @@ import java.util.stream.Collectors;
 
 import br.kuhn.dev.springboot._common.entity.BaseEntity;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Entity
 @Table(name = "users")
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String username;

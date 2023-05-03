@@ -17,11 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.kuhn.dev.springboot._core.security.entity.User;
-import br.kuhn.dev.springboot._core.security.repository.IUserRepository;
 import br.kuhn.dev.springboot._core.security.service.JwtTokenAuthenticationFilterService;
 import br.kuhn.dev.springboot._core.security.service.JwtTokenProviderService;
+import br.kuhn.dev.springboot._core.user.entity.User;
+import br.kuhn.dev.springboot._core.user.repository.IUserRepository;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Configuration
 public class SecurityConfig {
 

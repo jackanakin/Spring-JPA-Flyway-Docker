@@ -17,9 +17,13 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.kuhn.dev.springboot._core.security.service.AuthenticationService;
+import br.kuhn.dev.springboot._core.auth.service.AuthService;
 import br.kuhn.dev.springboot._core.security.service.JwtTokenAuthenticationFilterService;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -33,7 +37,7 @@ public abstract class BaseControllerTest {
         protected ObjectMapper objectMapper;
 
         @Autowired
-        private AuthenticationService authenticationService;
+        private AuthService authService;
 
         @Value("${server.servlet.context-path}")
         private String contextPath;
@@ -62,7 +66,7 @@ public abstract class BaseControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(HttpHeaders.AUTHORIZATION,
                                                 JwtTokenAuthenticationFilterService.HEADER_PREFIX
-                                                                + authenticationService.authenticate(username,
+                                                                + authService.authenticate(username,
                                                                                 password)));
         }
 
@@ -71,7 +75,7 @@ public abstract class BaseControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(HttpHeaders.AUTHORIZATION,
                                                 JwtTokenAuthenticationFilterService.HEADER_PREFIX
-                                                                + authenticationService.authenticate(username,
+                                                                + authService.authenticate(username,
                                                                                 password)));
         }
 
@@ -80,7 +84,7 @@ public abstract class BaseControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(HttpHeaders.AUTHORIZATION,
                                                 JwtTokenAuthenticationFilterService.HEADER_PREFIX
-                                                                + authenticationService.authenticate(username,
+                                                                + authService.authenticate(username,
                                                                                 password))
                                 .content(json));
         }
@@ -90,7 +94,7 @@ public abstract class BaseControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(HttpHeaders.AUTHORIZATION,
                                                 JwtTokenAuthenticationFilterService.HEADER_PREFIX
-                                                                + authenticationService.authenticate(username,
+                                                                + authService.authenticate(username,
                                                                                 password))
                                 .content(json));
         }

@@ -26,4 +26,9 @@ public class Foo extends BaseEntity {
 
     @Column(nullable = false)
     private FooTypeEnum type;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

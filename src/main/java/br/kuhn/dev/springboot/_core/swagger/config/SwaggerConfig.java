@@ -13,6 +13,10 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Configuration
 @EnableWebMvc
 public class SwaggerConfig implements WebMvcConfigurer {

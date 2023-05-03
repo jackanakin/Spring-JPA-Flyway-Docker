@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot._core.security.controller;
+package br.kuhn.dev.springboot._core.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,32 +12,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.kuhn.dev.springboot._common.controller.BaseController;
-import br.kuhn.dev.springboot._core.security.dto.request.AuthenticationRequestDTO;
-import br.kuhn.dev.springboot._core.security.entity.User;
-import br.kuhn.dev.springboot._core.security.service.AuthenticationService;
+import br.kuhn.dev.springboot._core.auth.dto.AuthRequestDto;
+import br.kuhn.dev.springboot._core.auth.service.AuthService;
+import br.kuhn.dev.springboot._core.user.entity.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @RestController
 @RequestMapping("/auth")
-public class AuthenticationController extends BaseController<User, AuthenticationRequestDTO> {
+public class AuthController extends BaseController<User, AuthRequestDto> {
 
-    public AuthenticationController() {
-        super(null, null);
+    public AuthController() {
+        super();
     }
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthService authService;
 
     @PostMapping()
-    public ResponseEntity<Object> signin(@RequestBody AuthenticationRequestDTO data) {
+    public ResponseEntity<Object> signin(@RequestBody AuthRequestDto dto) {
 
         try {
-            String username = data.getUsername();
-            String password = data.getPassword();
+            String username = dto.getUsername();
+            String password = dto.getPassword();
 
-            String token = authenticationService.authenticate(username, password);
+            String token = authService.authenticate(username, password);
 
             Map<Object, Object> model = new HashMap<>();
             model.put("username", username);

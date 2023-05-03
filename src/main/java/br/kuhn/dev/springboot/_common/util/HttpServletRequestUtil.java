@@ -5,6 +5,10 @@ import java.net.UnknownHostException;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 public class HttpServletRequestUtil {
     
     public static String getIpAddr(HttpServletRequest request) {

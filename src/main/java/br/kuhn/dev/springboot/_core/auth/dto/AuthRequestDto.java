@@ -1,17 +1,21 @@
-package br.kuhn.dev.springboot._core.security.dto.request;
+package br.kuhn.dev.springboot._core.auth.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
+import br.kuhn.dev.springboot._common.dto.BaseDto;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationRequestDTO implements Serializable {
+public class AuthRequestDto extends BaseDto {
     private static final long serialVersionUID = -6986746375915710855L;
     private String username;
     private String password;

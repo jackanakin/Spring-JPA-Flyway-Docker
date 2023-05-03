@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot._core.security.service;
+package br.kuhn.dev.springboot._core.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,8 +7,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
+import br.kuhn.dev.springboot._core.security.service.JwtTokenProviderService;
+
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Service
-public class AuthenticationService {
+public class AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;

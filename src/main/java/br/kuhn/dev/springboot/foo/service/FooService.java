@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import br.kuhn.dev.springboot._common.exception.ResourceNotFoundException;
+import br.kuhn.dev.springboot._common.mapper.IMapper;
+import br.kuhn.dev.springboot._common.repository.CustomRepository;
+import br.kuhn.dev.springboot._common.repository.GenericPage;
 import br.kuhn.dev.springboot.foo.dto.FooDto;
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.repository.IFooRepository;
@@ -14,14 +17,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
-
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @Service
 @Transactional
 public class FooService implements IFooService {
 
     @Autowired
     private IFooRepository repository;
+
+    // @Autowired
+    // private CustomFooRepository customRepository;
+
+    @Autowired
+    private CustomRepository<Foo, FooDto> customRepository;
+
+    @Override
+    public GenericPage<FooDto> findPageable(int pageNumber, int pageSize, IMapper<Foo, FooDto> mapper) {
+        return customRepository.findPageable(pageNumber, pageSize, Foo.class, mapper);
+        // return customRepository.findPageable(pageNumber, pageSize);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -32,7 +49,7 @@ public class FooService implements IFooService {
     @Override
     @Transactional(readOnly = true)
     public List<Foo> findAll() {
-        return Lists.newArrayList(repository.findAll());
+        return repository.findAll();
     }
 
     @Override

@@ -1,18 +1,22 @@
 package br.kuhn.dev.springboot._common.controller;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 import br.kuhn.dev.springboot._common.exception.ResourceNotFoundException;
+import br.kuhn.dev.springboot._common.mapper.IMapper;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 public abstract class BaseController<E, D> {
+    protected IMapper<E, D> mapper;
 
-    protected Function<E, D> entityToDto;
-    protected Function<D, E> dtoToEntity;
+    public BaseController() {
+    }
 
-    public BaseController(Function<E, D> entityToDto, Function<D, E> dtoToEntity) {
-        this.entityToDto = entityToDto;
-        this.dtoToEntity = dtoToEntity;
+    public BaseController(IMapper<E, D> mapper) {
+        this.mapper = mapper;
     }
 
     /**

@@ -7,6 +7,7 @@ import static org.hamcrest.core.Is.is;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -25,6 +26,10 @@ import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
 import br.kuhn.dev.springboot.foo.service.FooService;
 
+/**
+ * 
+ * @author Jardel Kuhn (jkuhn2@universo.univates.br)
+ */
 @ComponentScan(basePackages = "br.kuhn.dev.springboot.foo.mapper")
 public class FooControllerTest extends BaseControllerTest {
 
