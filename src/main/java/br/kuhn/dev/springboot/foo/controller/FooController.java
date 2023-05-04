@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.kuhn.dev.springboot._common.controller.BaseController;
 import br.kuhn.dev.springboot._common.repository.GenericPage;
+import br.kuhn.dev.springboot.foo.IFooApi;
 import br.kuhn.dev.springboot.foo.dto.FooDto;
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.mapper.FooMapper;
@@ -30,7 +31,7 @@ import br.kuhn.dev.springboot.foo.service.IFooService;
  */
 @RestController
 @RequestMapping("/foo")
-class FooController extends BaseController<Foo, FooDto> {
+class FooController extends BaseController<Foo, FooDto> implements IFooApi {
 
     @Autowired
     private IFooService service;
@@ -43,9 +44,9 @@ class FooController extends BaseController<Foo, FooDto> {
         super(fooMapper);
     }
 
-    @GetMapping
-    public GenericPage<FooDto> findAll(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    @Override
+    public GenericPage<FooDto> findAll(Integer pageNumber,
+            Integer pageSize) {
 
         if (pageNumber == null || pageNumber < 0) {
             pageNumber = DEFAULT_PAGE_NUMBER;
@@ -58,28 +59,25 @@ class FooController extends BaseController<Foo, FooDto> {
         return service.findPageable(pageNumber, pageSize, this.mapper);
     }
 
-    @GetMapping(value = "/{id}")
-    public FooDto findById(@PathVariable("id") UUID id) {
+    @Override
+    public FooDto findById(UUID id) {
         return this.mapper.entityToDto(checkFound(service.findById(id)));
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public FooDto create(@RequestBody @Valid FooDto dto) {
+    @Override
+    public FooDto create(FooDto dto) {
         Foo result = service.create(this.mapper.dtoToEntity(dto));
 
         return this.mapper.entityToDto(result);
     }
 
-    @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public FooDto update(@PathVariable("id") UUID id, @RequestBody @Valid FooDto dto) {
+    @Override
+    public FooDto update(UUID id, FooDto dto) {
         return this.mapper.entityToDto(service.update(dto, id));
     }
 
-    @DeleteMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") UUID id) {
+    @Override
+    public void delete(UUID id) {
         service.deleteById(id);
     }
 
