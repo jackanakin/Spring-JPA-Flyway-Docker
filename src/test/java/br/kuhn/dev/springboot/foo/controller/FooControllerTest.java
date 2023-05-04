@@ -41,7 +41,7 @@ public class FooControllerTest extends BaseControllerTest {
 
         UUID id;
         Foo expected;
-        FooDto validDto;
+        FooDto validCreateUpdateDto;
         GenericPage<FooDto> validPage;
 
         public FooControllerTest() {
@@ -52,15 +52,21 @@ public class FooControllerTest extends BaseControllerTest {
         public void setUp() {
                 id = UUID.randomUUID();
 
-                validDto = FooDto.builder()
+                validCreateUpdateDto = FooDto.builder()
+                                .name("Nice Ale")
+                                .type(FooTypeEnum.BAR)
+                                .build();
+
+                FooDto validResponseDto = FooDto.builder()
                                 .id(UUID.randomUUID())
                                 .name("Nice Ale")
                                 .type(FooTypeEnum.BAR)
                                 .build();
 
-                validPage = new GenericPage<FooDto>(List.of(validDto), 0, 10, 1L);
+                validPage = new GenericPage<FooDto>(List.of(validResponseDto), 0, 10, 1L);
 
-                expected = Foo.builder().id(id).name(validDto.getName()).type(validDto.getType()).build();
+                expected = Foo.builder().id(id).name(validCreateUpdateDto.getName())
+                                .type(validCreateUpdateDto.getType()).build();
         }
 
         @Test
@@ -69,7 +75,8 @@ public class FooControllerTest extends BaseControllerTest {
 
                 get("", id.toString())
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.content[0].id", is(validPage.getContent().get(0).getId().toString())))
+                                .andExpect(jsonPath("$.content[0].id",
+                                                is(validPage.getContent().get(0).getId().toString())))
                                 .andExpect(jsonPath("$.numberOfElements", is(validPage.getNumberOfElements())));
         }
 
@@ -105,7 +112,7 @@ public class FooControllerTest extends BaseControllerTest {
 
         @Test
         public void should_update() throws Exception {
-                String dtoJson = objectMapper.writeValueAsString(validDto);
+                String dtoJson = objectMapper.writeValueAsString(validCreateUpdateDto);
 
                 given(mockService.update(any(), any())).willReturn(expected);
 
@@ -130,14 +137,14 @@ public class FooControllerTest extends BaseControllerTest {
 
         @Test
         public void should_create() throws Exception {
-                String dtoJson = objectMapper.writeValueAsString(validDto);
+                String dtoJson = objectMapper.writeValueAsString(validCreateUpdateDto);
 
                 given(mockService.create(any())).willReturn(expected);
 
                 post("", dtoJson)
                                 .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.id", is(validDto.getId().toString())))
-                                .andExpect(jsonPath("$.name", is(validDto.getName())))
+                                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
+                                .andExpect(jsonPath("$.name", is(expected.getName())))
                                 .andDo(document("post-foo",
                                                 requestFields(
                                                                 fields.withPath("id").ignored(),
