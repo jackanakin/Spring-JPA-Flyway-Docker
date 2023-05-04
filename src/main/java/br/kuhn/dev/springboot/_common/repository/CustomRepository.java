@@ -50,5 +50,5 @@ public class CustomRepository<E, D> {
                                                 .collect(Collectors.toList()),
                                 pageNumber, pageSize, count);
         }
-
+        
 }

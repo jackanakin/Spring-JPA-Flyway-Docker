@@ -11,7 +11,6 @@ import br.kuhn.dev.springboot._common.repository.GenericPage;
 import br.kuhn.dev.springboot.foo.dto.FooDto;
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.repository.IFooRepository;
-import br.kuhn.dev.springboot.foo.service.interfaces.IFooService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,16 +27,12 @@ public class FooService implements IFooService {
     @Autowired
     private IFooRepository repository;
 
-    // @Autowired
-    // private CustomFooRepository customRepository;
-
     @Autowired
     private CustomRepository<Foo, FooDto> customRepository;
 
     @Override
     public GenericPage<FooDto> findPageable(int pageNumber, int pageSize, IMapper<Foo, FooDto> mapper) {
         return customRepository.findPageable(pageNumber, pageSize, Foo.class, mapper);
-        // return customRepository.findPageable(pageNumber, pageSize);
     }
 
     @Override

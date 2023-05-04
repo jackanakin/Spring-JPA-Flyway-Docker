@@ -1,6 +1,7 @@
 package br.kuhn.dev.springboot.foo.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 
 import static org.hamcrest.core.Is.is;
@@ -17,10 +18,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import br.kuhn.dev.springboot._common.BaseControllerTest;
+import br.kuhn.dev.springboot._common.repository.GenericPage;
 import br.kuhn.dev.springboot.foo.dto.FooDto;
 import br.kuhn.dev.springboot.foo.entity.Foo;
 import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
@@ -36,9 +39,10 @@ public class FooControllerTest extends BaseControllerTest {
         @MockBean
         FooService mockService;
 
-        FooDto validDto;
-        Foo expected;
         UUID id;
+        Foo expected;
+        FooDto validDto;
+        GenericPage<FooDto> validPage;
 
         public FooControllerTest() {
                 super("/foo", FooDto.class);
@@ -49,15 +53,28 @@ public class FooControllerTest extends BaseControllerTest {
                 id = UUID.randomUUID();
 
                 validDto = FooDto.builder()
+                                .id(UUID.randomUUID())
                                 .name("Nice Ale")
                                 .type(FooTypeEnum.BAR)
                                 .build();
+
+                validPage = new GenericPage<FooDto>(List.of(validDto), 0, 10, 1L);
 
                 expected = Foo.builder().id(id).name(validDto.getName()).type(validDto.getType()).build();
         }
 
         @Test
-        public void deleteById() throws Exception {
+        public void should_getPage() throws Exception {
+                given(mockService.findPageable(anyInt(), anyInt(), any())).willReturn(validPage);
+
+                get("", id.toString())
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.content[0].id", is(validPage.getContent().get(0).getId().toString())))
+                                .andExpect(jsonPath("$.numberOfElements", is(validPage.getNumberOfElements())));
+        }
+
+        @Test
+        public void should_deleteById() throws Exception {
                 delete("{id}", id.toString())
                                 .andExpect(status().isNoContent())
                                 .andDo(document("delete-foo",
@@ -67,7 +84,7 @@ public class FooControllerTest extends BaseControllerTest {
         }
 
         @Test
-        public void shouldGetById() throws Exception {
+        public void should_getById() throws Exception {
                 given(mockService.findById(any())).willReturn(Optional.of(expected));
 
                 get("{id}", id.toString())
@@ -87,7 +104,7 @@ public class FooControllerTest extends BaseControllerTest {
         }
 
         @Test
-        public void shouldUpdate() throws Exception {
+        public void should_update() throws Exception {
                 String dtoJson = objectMapper.writeValueAsString(validDto);
 
                 given(mockService.update(any(), any())).willReturn(expected);
@@ -112,15 +129,15 @@ public class FooControllerTest extends BaseControllerTest {
         }
 
         @Test
-        public void shouldCreate() throws Exception {
+        public void should_create() throws Exception {
                 String dtoJson = objectMapper.writeValueAsString(validDto);
 
                 given(mockService.create(any())).willReturn(expected);
 
                 post("", dtoJson)
                                 .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                                .andExpect(jsonPath("$.name", is(expected.getName())))
+                                .andExpect(jsonPath("$.id", is(validDto.getId().toString())))
+                                .andExpect(jsonPath("$.name", is(validDto.getName())))
                                 .andDo(document("post-foo",
                                                 requestFields(
                                                                 fields.withPath("id").ignored(),

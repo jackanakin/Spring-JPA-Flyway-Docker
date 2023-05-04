@@ -1,4 +1,4 @@
-package br.kuhn.dev.springboot.foo.service.interfaces;
+package br.kuhn.dev.springboot.foo.service;
 
 import br.kuhn.dev.springboot._common.service.BaseService;
 import br.kuhn.dev.springboot.foo.dto.FooDto;
