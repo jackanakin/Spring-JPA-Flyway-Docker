@@ -12,10 +12,10 @@ import br.kuhn.dev.springboot._common.mapper.IMapper;
 public abstract class BaseController<E, D> {
     protected IMapper<E, D> mapper;
 
-    public BaseController() {
+    protected BaseController() {
     }
 
-    public BaseController(IMapper<E, D> mapper) {
+    protected BaseController(IMapper<E, D> mapper) {
         this.mapper = mapper;
     }
 
@@ -26,7 +26,7 @@ public abstract class BaseController<E, D> {
      * @return T
      * @throws ResourceNotFoundException
      */
-    public <T> T checkFound(final T resource) {
+    protected <T> T checkFound(final T resource) {
         if (resource == null) {
             throw new ResourceNotFoundException();
         }
@@ -41,7 +41,7 @@ public abstract class BaseController<E, D> {
      * @return T
      * @throws ResourceNotFoundException
      */
-    public <T> T checkFound(final Optional<T> resource) {
+    protected <T> T checkFound(final Optional<T> resource) {
         if (resource.isEmpty()) {
             throw new ResourceNotFoundException();
         }

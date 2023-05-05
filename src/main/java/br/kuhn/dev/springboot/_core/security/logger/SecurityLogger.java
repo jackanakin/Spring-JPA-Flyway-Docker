@@ -15,18 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class SecurityLogger {
-    
-    @Around("execution(* br.kuhn.dev.springboot._core.security.controller.*.*(..))")
+
+	@Around("execution(* br.kuhn.dev.springboot._core.security.controller.*.*(..))")
 	public Object aroundGetFortune(
 			ProceedingJoinPoint theProceedingJoinPoint) throws Throwable {
-		
-		String method = theProceedingJoinPoint.getSignature().toShortString();
-        log.warn("\n=====>>> Executing @Around on method: " + method);
 
-		long begin = System.currentTimeMillis();
-		
+		String method = theProceedingJoinPoint.getSignature().toShortString();
+		log.warn("\n=====>>> Executing @Around on method: " + method);
+
 		Object result = null;
-		
+
 		try {
 			result = theProceedingJoinPoint.proceed();
 		} catch (Exception e) {
@@ -34,12 +32,7 @@ public class SecurityLogger {
 
 			throw e;
 		}
-		
-		long end = System.currentTimeMillis();
-		
-		long duration = end - begin;
-		// log.info("\n=====> Duration: " + duration / 1000.0 + " seconds");
-		
+
 		return result;
 	}
 }

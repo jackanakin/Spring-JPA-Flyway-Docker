@@ -70,7 +70,7 @@ public class ControllerLogger {
         long end = System.currentTimeMillis();
 
         long duration = end - begin;
-        // log.info("Duration: " + duration / 1000.0 + " seconds");
+        log.info("Duration: " + duration / 1000.0 + " seconds");
 
         return result;
     }

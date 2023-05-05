@@ -93,3 +93,6 @@ kafka
 aws
 mongodb
 user registration
+password validator bean
+password hook no user save
+rever exceptions (mensagens dentro)

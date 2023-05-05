@@ -1,5 +1,9 @@
 package br.kuhn.dev.springboot._common;
 
+import javax.annotation.PostConstruct;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -18,6 +23,8 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.kuhn.dev.springboot._core.auth.service.AuthService;
+import br.kuhn.dev.springboot._core.registration.dto.RegistrationDto;
+import br.kuhn.dev.springboot._core.registration.service.RegistrationService;
 import br.kuhn.dev.springboot._core.security.service.JwtTokenAuthenticationFilterService;
 
 /**
@@ -27,7 +34,7 @@ import br.kuhn.dev.springboot._core.security.service.JwtTokenAuthenticationFilte
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
+@ExtendWith(SpringExtension.class)
 public abstract class BaseControllerTest {
 
         @Autowired
@@ -38,6 +45,9 @@ public abstract class BaseControllerTest {
 
         @Autowired
         private AuthService authService;
+
+        @Autowired
+        private RegistrationService registrationService;
 
         @Value("${server.servlet.context-path}")
         private String contextPath;
@@ -51,6 +61,12 @@ public abstract class BaseControllerTest {
         public BaseControllerTest(String rootUri, Class<?> dtoClass) {
                 this.rootUri = rootUri;
                 this.fields = new ConstrainedFields(dtoClass);
+        }
+
+        @PostConstruct
+        public void postConstruct()
+        {
+                this.registrationService.createUser(new RegistrationDto(username, username, password));
         }
 
         private String uri(String path) {

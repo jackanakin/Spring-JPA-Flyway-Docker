@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GetServletRequestIp {
-    
-    public String parse(HttpServletRequest request) {
+
+    public String parse(HttpServletRequest request) throws UnknownHostException {
         String ipAddress = request.getHeader("x-forwarded-for");
-        
-        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+
+        if (isInvalidAddress(ipAddress)) {
             ipAddress = request.getHeader("Proxy-Client-IP");
         }
 
-        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (isInvalidAddress(ipAddress)) {
             ipAddress = request.getHeader("WL-Proxy-Client-IP");
         }
 
-        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (isInvalidAddress(ipAddress)) {
             ipAddress = request.getRemoteAddr();
 
             if (ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
@@ -35,7 +35,7 @@ public class GetServletRequestIp {
                     inet = InetAddress.getLocalHost();
                     ipAddress = inet.getHostAddress();
                 } catch (UnknownHostException e) {
-                    e.printStackTrace();
+                    throw e;
                 }
             }
         }
@@ -46,5 +46,9 @@ public class GetServletRequestIp {
             }
         }
         return ipAddress;
+    }
+
+    private boolean isInvalidAddress(String ipAddress) {
+        return ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress);
     }
 }

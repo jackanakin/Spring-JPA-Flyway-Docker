@@ -12,11 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +31,7 @@ import br.kuhn.dev.springboot.foo.service.FooService;
  * @author Jardel Kuhn (jkuhn2@universo.univates.br)
  */
 @ComponentScan(basePackages = "br.kuhn.dev.springboot.foo.mapper")
-public class FooControllerTest extends BaseControllerTest {
+class FooControllerTest extends BaseControllerTest {
 
         @MockBean
         FooService mockService;
@@ -44,12 +41,12 @@ public class FooControllerTest extends BaseControllerTest {
         FooDto validCreateUpdateDto;
         GenericPage<FooDto> validPage;
 
-        public FooControllerTest() {
+        FooControllerTest() {
                 super("/foo", FooDto.class);
         }
 
         @BeforeEach
-        public void setUp() {
+        void setUp() {
                 id = UUID.randomUUID();
 
                 validCreateUpdateDto = FooDto.builder()
@@ -70,7 +67,7 @@ public class FooControllerTest extends BaseControllerTest {
         }
 
         @Test
-        public void should_getPage() throws Exception {
+        void should_getPage() throws Exception {
                 given(mockService.findPageable(anyInt(), anyInt(), any())).willReturn(validPage);
 
                 get("", id.toString())
@@ -81,37 +78,24 @@ public class FooControllerTest extends BaseControllerTest {
         }
 
         @Test
-        public void should_deleteById() throws Exception {
+        void should_deleteById() throws Exception {
                 delete("{id}", id.toString())
-                                .andExpect(status().isNoContent())
-                                .andDo(document("delete-foo",
-                                                pathParameters(
-                                                                parameterWithName("id").description(
-                                                                                "UUID of desired foo to delete."))));
+                                .andExpect(status().isNoContent());
         }
 
         @Test
-        public void should_getById() throws Exception {
+        void should_getById() throws Exception {
                 given(mockService.findById(any())).willReturn(Optional.of(expected));
 
                 get("{id}", id.toString())
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
                                 .andExpect(jsonPath("$.name", is(expected.getName())))
-                                .andExpect(jsonPath("$.type", is(expected.getType().name())))
-                                .andDo(document("get-foo",
-                                                pathParameters(
-                                                                parameterWithName("id").description(
-                                                                                "UUID of desired foo to get.")),
-                                                responseFields(
-                                                                fields.withPath("id").description("Id of the foo"),
-                                                                fields.withPath("name").description("Name of the foo"),
-                                                                fields.withPath("type")
-                                                                                .description("Type of the foo"))));
+                                .andExpect(jsonPath("$.type", is(expected.getType().name())));
         }
 
         @Test
-        public void should_update() throws Exception {
+        void should_update() throws Exception {
                 String dtoJson = objectMapper.writeValueAsString(validCreateUpdateDto);
 
                 given(mockService.update(any(), any())).willReturn(expected);
@@ -119,24 +103,11 @@ public class FooControllerTest extends BaseControllerTest {
                 put("{id}", dtoJson, id.toString())
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                                .andExpect(jsonPath("$.name", is(expected.getName())))
-                                .andDo(document("put-foo",
-                                                pathParameters(
-                                                                parameterWithName("id").description(
-                                                                                "UUID of desired foo to update.")),
-                                                requestFields(
-                                                                fields.withPath("id").ignored(),
-                                                                fields.withPath("name").description("Name of the foo"),
-                                                                fields.withPath("type").description("Type of the foo")),
-                                                responseFields(
-                                                                fields.withPath("id").description("Id of the foo"),
-                                                                fields.withPath("name").description("Name of the foo"),
-                                                                fields.withPath("type")
-                                                                                .description("Type of the foo"))));
+                                .andExpect(jsonPath("$.name", is(expected.getName())));
         }
 
         @Test
-        public void should_create() throws Exception {
+        void should_create() throws Exception {
                 String dtoJson = objectMapper.writeValueAsString(validCreateUpdateDto);
 
                 given(mockService.create(any())).willReturn(expected);
@@ -144,12 +115,6 @@ public class FooControllerTest extends BaseControllerTest {
                 post("", dtoJson)
                                 .andExpect(status().isCreated())
                                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
-                                .andExpect(jsonPath("$.name", is(expected.getName())))
-                                .andDo(document("post-foo",
-                                                requestFields(
-                                                                fields.withPath("id").ignored(),
-                                                                fields.withPath("name").description("Name of the foo"),
-                                                                fields.withPath("type")
-                                                                                .description("Type of the foo"))));
+                                .andExpect(jsonPath("$.name", is(expected.getName())));
         }
 }
