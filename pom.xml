@@ -24,7 +24,7 @@
 		<jjwt.version>0.11.5</jjwt.version>
 		<aspectj.version>1.9.9.1</aspectj.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
+		<lombok.mapstruct.binding>0.3.0</lombok.mapstruct.binding>
 		<junit.version>5.9.3</junit.version>
 		<junit.engine.version>5.9.3</junit.engine.version>
 		<jacoco.version>0.8.10</jacoco.version>
