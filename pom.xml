@@ -27,6 +27,7 @@
 		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
 		<junit.version>5.9.3</junit.version>
 		<junit.engine.version>5.9.3</junit.engine.version>
+		<jacoco.version>0.8.10</jacoco.version>
 	</properties>
 	<dependencies>
 		<!-- springframework -->
@@ -277,6 +278,36 @@
                     </execution>
                 </executions>
             </plugin>
+			<!-- ...end -->
+
+			<!-- JaCo -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/_common/**</exclude>
+						<exclude>**/dto/**</exclude>
+						<exclude>**/entity/**</exclude>
+						<exclude>**/properties/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				</plugin>
 			<!-- ...end -->
 
 		</plugins>
