@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeRequests(c -> c
                         // authentication
                         .antMatchers("/auth").permitAll()
+                        .antMatchers("/registration").permitAll()
 
                         // Swagger
                         .antMatchers("/swagger-ui/**").permitAll()

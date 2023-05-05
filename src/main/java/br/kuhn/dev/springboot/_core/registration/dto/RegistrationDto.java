@@ -1,7 +1,8 @@
-package br.kuhn.dev.springboot.foo.dto;
+package br.kuhn.dev.springboot._core.registration.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import br.kuhn.dev.springboot._common.dto.BaseDto;
-import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
 
 /**
  * 
@@ -23,12 +21,15 @@ import br.kuhn.dev.springboot.foo.entity.FooTypeEnum;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-public class FooDto extends BaseDto {
+public class RegistrationDto extends BaseDto {
 
     @NotBlank(message = "Name cannot be empty")
     private String name;
 
-    @ApiModelProperty
-    @NotNull(message = "Select a valid type")
-    private FooTypeEnum type;
+    @Email(message = "Enter a valid e-mail")
+    private String email;
+
+    @Size(min = 8, message = "Use a strong password")
+    private String password;
+
 }

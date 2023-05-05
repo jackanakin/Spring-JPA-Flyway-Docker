@@ -5,13 +5,16 @@ import java.net.UnknownHostException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Service;
+
 /**
  * 
  * @author Jardel Kuhn (jkuhn2@universo.univates.br)
  */
-public class HttpServletRequestUtil {
+@Service
+public class GetServletRequestIp {
     
-    public static String getIpAddr(HttpServletRequest request) {
+    public String parse(HttpServletRequest request) {
         String ipAddress = request.getHeader("x-forwarded-for");
         
         if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {

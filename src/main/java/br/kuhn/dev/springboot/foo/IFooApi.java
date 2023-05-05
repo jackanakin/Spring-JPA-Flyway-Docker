@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,31 +24,21 @@ import br.kuhn.dev.springboot.foo.dto.FooDto;
 public interface IFooApi {
 
     @GetMapping
-    default GenericPage<FooDto> findAll(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        throw new NotYetImplementedException();
-    }
+    GenericPage<FooDto> findAll(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", required = false) Integer pageSize);
 
     @GetMapping(value = "/{id}")
-    default FooDto findById(@PathVariable("id") UUID id) {
-        throw new NotYetImplementedException();
-    }
+    FooDto findById(@PathVariable("id") UUID id);
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    default FooDto create(@RequestBody @Valid FooDto dto) {
-        throw new NotYetImplementedException();
-    }
+    FooDto create(@RequestBody @Valid FooDto dto);
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    default FooDto update(@PathVariable("id") UUID id, @RequestBody @Valid FooDto dto) {
-        throw new NotYetImplementedException();
-    }
+    FooDto update(@PathVariable("id") UUID id, @RequestBody @Valid FooDto dto);
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    default void delete(@PathVariable("id") UUID id) {
-        throw new NotYetImplementedException();
-    }
+    void delete(@PathVariable("id") UUID id);
 }

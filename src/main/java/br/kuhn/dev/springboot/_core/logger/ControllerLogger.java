@@ -6,6 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -13,7 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 
-import br.kuhn.dev.springboot._common.util.HttpServletRequestUtil;
+import br.kuhn.dev.springboot._common.util.GetServletRequestIp;
 import br.kuhn.dev.springboot._core.user.entity.User;
 
 /**
@@ -24,6 +25,9 @@ import br.kuhn.dev.springboot._core.user.entity.User;
 @Slf4j
 @Component
 public class ControllerLogger {
+
+    @Autowired
+    private GetServletRequestIp getServletRequestIp;
 
     @Around("execution(* br.kuhn.dev.springboot.*.controller.*.*(..))")
     public Object aroundControllers(
@@ -40,7 +44,7 @@ public class ControllerLogger {
                 .append("@")
                 .append(method)
                 .append(":")
-                .append(HttpServletRequestUtil.getIpAddr(request))
+                .append(getServletRequestIp.parse(request))
                 .append(",")
                 .append(request.getRequestURL().toString());
 
