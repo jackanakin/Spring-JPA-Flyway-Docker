@@ -15,9 +15,6 @@
 
 </div>
 
-Run all commands on root directory<br/>
-Just do step 2 to run, if you want to build run step 1
-<br/>
 ### 1. Building:
 Build JAVA project:
 >./mvnw clean install
@@ -54,38 +51,50 @@ Go to http://localhost:80/person to list all persons from database
 
 > check "application.properties" for custom settings
 
-Project structure:
-->  docker: docker deploy related code
+2. Git clone or Use this template.
 
-->  src/main/java/br/kuhn/dev/springboot
-->      _common: common classes and utilities like BaseEntity, BaseRepository and etc.
-->      _core:   main functionalities like AAA, logging, exception handling, and etc.
-->      foo:     domain related code
+3. Run
+
+Project structure:
+```
+->  docker: docker deploy related code
+->  .circleci: Circle CI configuration
+->  src/
+->      test/java/br/kuhn/dev/springboot: unit tests
+->      main/java/br/kuhn/dev/springboot: main code
+->        _common: common classes and utilities like BaseEntity, BaseRepository and etc.
+->        _core:   main functionalities like AAA, logging, exception handling, and etc.
+->        foo:     domain related code
 
 ->  src/main/resources
 ->      application.properties: configurations like database credentials, flyway settings, server port and etc.
 ->      db/migration: flyway .sql migrations
+```
 
+| Have |  |
+| ------------- | ------------- |
+| Spring Security | Customized [UserDetails](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/user/entity/User.java), [Authorization](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/security/config/SecurityConfig.java) with springWebFilterChain and JwtToken |
+| Spring JPA  | [Base Repository](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_common/repository/BaseRepository.java) and [Custom Repository](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_common/repository/CustomRepository.java) for pagination  |
+| Flyway  | Optional for [database migrations](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main/src/main/resources/db/migration)  |
+| Lombok  | Eliminate boilerplate code in entities and dtos with ctor, setters and gettes  |
+| MapStruct  | [Entity <--> Dto conversion](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/foo/mapper/FooMapper.java)  |
+| Bean validation  | [Javax Persistence](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/foo/entity/Foo.java) for validating incoming dto's  |
+| RestControllerAdvice  | Intercept exceptions and customize the response with [@ExceptionHandler](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/validation/handler/ValidationExceptionHandler.java)  |
+| Docker  | [Simple docker sample](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main/docker)  |
+| Aspect Oriented Programming  | [Intercept](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/logger/ControllerLogger.java) before and after methods execution of classes  |
+| Base Classes  | [Base classes](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main/src/main/java/br/kuhn/dev/springboot/_common) which aggregate common behaviors between controllers, entities and etc. |
+| Swagger  | Run the application and go to http://localhost:8080/swagger-ui/index.html  |
+| JUnit5 and Mockito  | [Unit test for endpoint controllers](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/test/java/br/kuhn/dev/springboot/foo/controller/FooControllerTest.java)  |
+| JaCoCo  | Test [coverage report]() with JaCoCo  |
+| Insomnia  | [Practical documentation for development](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/insomnia.json)  |
+| CI Build  | [CircleCI](https://app.circleci.com/pipelines/github/jackanakin/Spring-JPA-Flyway-Nginx-Docker) for continuous integration and test execution |
+| Code quality  | [SonarCloud](https://sonarcloud.io/project/overview?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker) for continuous code quality analysis  |
 
-Have:
-
-Spring Security with customized User via UserDetails and Authorization filter with JwtToken
-JPA + Flyway (optional) + Lombok + MapStruct + Bean validation
-ControllerAdvice for Rest endpoints exception handling
-Spring CommandLineRunner for initialization operations
-Docker and external properties with application.properties
-Aspect Oriented Programming for custom operations
-Base classes to reduce boiler plate like BaseEntity, BaseDto, BaseRepository, BaseService and BaseController
-
-
+<!--
 TODO
-
-Swagger
-tests
 api-versioning
 brute-force
 rest-template for integration test
-unit testing
 logging with ELK Stack
 distributed tracing
 spring cloud + eureka + gateway
@@ -93,17 +102,12 @@ oauth2 + keycloak
 sagas
 JMS
 i18n
-Insomnia or Postman
 Spring cloud microservice
-CI Build
-PageImpl
 Session management or keycloak
-hot reload
 image;files upload/download
 kafka
 aws
 mongodb
-user registration
 password validator bean
 password hook no user save
-rever exceptions (mensagens dentro)
+-->
