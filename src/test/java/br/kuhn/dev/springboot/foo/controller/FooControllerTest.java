@@ -1,7 +1,7 @@
 package br.kuhn.dev.springboot.foo.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 import static org.hamcrest.core.Is.is;
@@ -40,6 +40,7 @@ class FooControllerTest extends BaseControllerTest {
         Foo expected;
         FooDto validCreateUpdateDto;
         GenericPage<FooDto> validPage;
+        FooDto validResponseDto;
 
         FooControllerTest() {
                 super("/foo", FooDto.class);
@@ -54,23 +55,56 @@ class FooControllerTest extends BaseControllerTest {
                                 .type(FooTypeEnum.BAR)
                                 .build();
 
-                FooDto validResponseDto = FooDto.builder()
+                validResponseDto = FooDto.builder()
                                 .id(UUID.randomUUID())
                                 .name("Nice Ale")
                                 .type(FooTypeEnum.BAR)
                                 .build();
-
-                validPage = new GenericPage<FooDto>(List.of(validResponseDto), 0, 10, 1L);
 
                 expected = Foo.builder().id(id).name(validCreateUpdateDto.getName())
                                 .type(validCreateUpdateDto.getType()).build();
         }
 
         @Test
-        void should_getPage() throws Exception {
-                given(mockService.findPageable(anyInt(), anyInt(), any())).willReturn(validPage);
+        void should_getPageNumber2AndSize1() throws Exception {
+                validPage = new GenericPage<FooDto>(
+                                List.of(validResponseDto, validResponseDto, validResponseDto, validResponseDto), 2, 1,
+                                4L);
 
-                get("", id.toString())
+                given(mockService.findPageable(eq(validPage.getPageable().getPageNumber()),
+                                eq(validPage.getPageable().getPageSize()), any())).willReturn(validPage);
+
+                get("?pageSize=1&pageNumber=2")
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.content[0].id",
+                                                is(validPage.getContent().get(0).getId().toString())))
+                                .andExpect(jsonPath("$.numberOfElements", is(validPage.getNumberOfElements())));
+        }
+
+        @Test
+        void should_getPageSize1() throws Exception {
+                validPage = new GenericPage<FooDto>(
+                                List.of(validResponseDto, validResponseDto, validResponseDto, validResponseDto), 0, 1,
+                                4L);
+
+                given(mockService.findPageable(eq(validPage.getPageable().getPageNumber()),
+                                eq(validPage.getPageable().getPageSize()), any())).willReturn(validPage);
+
+                get("?pageSize=1")
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.content[0].id",
+                                                is(validPage.getContent().get(0).getId().toString())))
+                                .andExpect(jsonPath("$.numberOfElements", is(validPage.getNumberOfElements())));
+        }
+
+        @Test
+        void should_getPage() throws Exception {
+                validPage = new GenericPage<FooDto>(List.of(validResponseDto), 0, 5, 1L);
+
+                given(mockService.findPageable(eq(validPage.getPageable().getPageNumber()),
+                                eq(validPage.getPageable().getPageSize()), any())).willReturn(validPage);
+
+                get("")
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.content[0].id",
                                                 is(validPage.getContent().get(0).getId().toString())))
@@ -104,6 +138,27 @@ class FooControllerTest extends BaseControllerTest {
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.id", is(expected.getId().toString())))
                                 .andExpect(jsonPath("$.name", is(expected.getName())));
+        }
+
+        @Test
+        void should_NotCreate_empty_type() throws Exception {
+                String dtoJson = FooDto.builder()
+                                .name("awdawd")
+                                .build().toString();
+
+                post("", dtoJson)
+                                .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void should_NotCreate_empty_name() throws Exception {
+                String dtoJson = FooDto.builder()
+                                .name("")
+                                .type(FooTypeEnum.BAR)
+                                .build().toString();
+
+                post("", dtoJson)
+                                .andExpect(status().isBadRequest());
         }
 
         @Test
