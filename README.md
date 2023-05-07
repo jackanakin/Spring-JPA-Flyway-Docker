@@ -2,16 +2,16 @@
 
 <div align="center">
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jackanakin/spring-monolith-project/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/jackanakin/spring-monolith-project/tree/main)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <br/>
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=coverage)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=coverage)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
 
 </div>
 
@@ -73,22 +73,22 @@ Project structure:
 
 | Have |  |
 | ------------- | ------------- |
-| Spring Security | Customized [UserDetails](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/user/entity/User.java), [Authorization](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/security/config/SecurityConfig.java) with springWebFilterChain and JwtToken |
-| Spring JPA  | [Base Repository](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_common/repository/BaseRepository.java) and [Custom Repository](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_common/repository/CustomRepository.java) for pagination  |
-| Flyway  | Optional for [database migrations](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main/src/main/resources/db/migration)  |
+| Spring Security | Customized [UserDetails](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/_core/user/entity/User.java), [Authorization](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/_core/security/config/SecurityConfig.java) with springWebFilterChain and JwtToken |
+| Spring JPA  | [Base Repository](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/_common/repository/BaseRepository.java) and [Custom Repository](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/_common/repository/CustomRepository.java) for pagination  |
+| Flyway  | Optional for [database migrations](https://github.com/jackanakin/spring-monolith-project/tree/main/src/main/resources/db/migration)  |
 | Lombok  | Eliminate boilerplate code in entities and dtos with ctor, setters and gettes  |
-| MapStruct  | [Entity <--> Dto conversion](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/foo/mapper/FooMapper.java)  |
-| Bean validation  | [Javax Persistence](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/foo/entity/Foo.java) for validating incoming dto's  |
-| RestControllerAdvice  | Intercept exceptions and customize the response with [@ExceptionHandler](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/validation/handler/ValidationExceptionHandler.java)  |
-| Docker  | [Simple docker sample](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main/docker)  |
-| Aspect Oriented Programming  | [Intercept](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/main/java/br/kuhn/dev/springboot/_core/logger/ControllerLogger.java) before and after methods execution of classes  |
-| Base Classes  | [Base classes](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/tree/main/src/main/java/br/kuhn/dev/springboot/_common) which aggregate common behaviors between controllers, entities and etc. |
+| MapStruct  | [Entity <--> Dto conversion](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/foo/mapper/FooMapper.java)  |
+| Bean validation  | [Javax Persistence](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/foo/entity/Foo.java) for validating incoming dto's  |
+| RestControllerAdvice  | Intercept exceptions and customize the response with [@ExceptionHandler](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/_core/validation/handler/ValidationExceptionHandler.java)  |
+| Docker  | [Simple docker sample](https://github.com/jackanakin/spring-monolith-project/tree/main/docker)  |
+| Aspect Oriented Programming  | [Intercept](https://github.com/jackanakin/spring-monolith-project/blob/main/src/main/java/br/kuhn/dev/springboot/_core/logger/ControllerLogger.java) before and after methods execution of classes  |
+| Base Classes  | [Base classes](https://github.com/jackanakin/spring-monolith-project/tree/main/src/main/java/br/kuhn/dev/springboot/_common) which aggregate common behaviors between controllers, entities and etc. |
 | Swagger  | Run the application and go to http://localhost:8080/swagger-ui/index.html  |
-| JUnit5 and Mockito  | [Unit test for endpoint controllers](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/src/test/java/br/kuhn/dev/springboot/foo/controller/FooControllerTest.java)  |
+| JUnit5 and Mockito  | [Unit test for endpoint controllers](https://github.com/jackanakin/spring-monolith-project/blob/main/src/test/java/br/kuhn/dev/springboot/foo/controller/FooControllerTest.java)  |
 | JaCoCo  | Test [coverage report]() with JaCoCo  |
-| Insomnia  | [Practical documentation for development](https://github.com/jackanakin/Spring-JPA-Flyway-Nginx-Docker/blob/main/insomnia.json)  |
-| CI Build  | [CircleCI](https://app.circleci.com/pipelines/github/jackanakin/Spring-JPA-Flyway-Nginx-Docker) for continuous integration and test execution |
-| Code quality  | [SonarCloud](https://sonarcloud.io/project/overview?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker) for continuous code quality analysis  |
+| Insomnia  | [Practical documentation for development](https://github.com/jackanakin/spring-monolith-project/blob/main/insomnia.json)  |
+| CI Build  | [CircleCI](https://app.circleci.com/pipelines/github/jackanakin/spring-monolith-project) for continuous integration and test execution |
+| Code quality  | [SonarCloud](https://sonarcloud.io/project/overview?id=jackanakin_spring-monolith-project) for continuous code quality analysis  |
 
 <!--
 TODO
