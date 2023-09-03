@@ -90,12 +90,15 @@ Project structure:
 | CI Build  | [CircleCI](https://app.circleci.com/pipelines/github/jackanakin/spring-monolith-project) for continuous integration and test execution |
 | Code quality  | [SonarCloud](https://sonarcloud.io/project/overview?id=jackanakin_spring-monolith-project) for continuous code quality analysis  |
 
+| To do |  |
+| ------------- | ------------- |
+| API Versioning | |
+| Throttler | |
+| Telemetry/Monitoring | ELK stack ? |
+| oAuth + keycloak | from my other repo [here](https://github.com/jackanakin/OAuth-2.0-in-Spring-Boot-Applications) |
 <!--
 TODO
-api-versioning
-brute-force
 rest-template for integration test
-logging with ELK Stack
 distributed tracing
 spring cloud + eureka + gateway
 oauth2 + keycloak
