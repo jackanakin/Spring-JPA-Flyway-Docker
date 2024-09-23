@@ -5,13 +5,13 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/jackanakin/spring-monolith-project/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/jackanakin/spring-monolith-project/tree/main)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <br/>
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=coverage)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_Spring-JPA-Flyway-Nginx-Docker&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_Spring-JPA-Flyway-Nginx-Docker)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=coverage)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jackanakin_spring-monolith-project&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=jackanakin_spring-monolith-project)
 
 </div>
 
